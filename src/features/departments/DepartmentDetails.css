@@ -1,0 +1,25 @@
+/* src/features/departments/DepartmentDetails.css */
+.department-details-container {
+    display: flex;                /* Use flexbox to display items horizontally */
+    flex-wrap: nowrap;            /* Prevent wrapping */
+    gap: 16px;                    /* Space between items */
+    justify-content: flex-start;  /* Align items to the left */
+    width: 100%;                  /* Take full width */
+  }
+  
+  .department-detail-item {
+    padding: 8px 16px;            /* Padding for each item */
+    background-color: #eeeeee;    /* Background color */
+    border-radius: 4px;           /* Rounded corners */
+    font-size: 0.85rem;           /* Font size */
+    color: #222;                  /* Text color */
+    white-space: nowrap;          /* Prevent wrapping */
+    cursor: pointer;             /* Pointer on hover */
+    transition: background-color 0.2s;
+    min-width: 120px;             /* Minimum width to avoid collapse */
+    text-align: center;           /* Center text */
+  }
+  
+  .department-detail-item:hover {
+    background-color: #ddd;       /* Change background on hover */
+  }  

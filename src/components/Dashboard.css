@@ -1,0 +1,38 @@
+.dashboard-container {
+    position: relative; /* Ensures that the dropdown is positioned relative to this container */
+  }
+  
+  .dashboard-menu {
+    position: relative;
+  }
+  
+  .dashboard-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .dashboard-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .dropdown-content {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+  }
+  
+  .dropdown-content button {
+    background-color: transparent;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  .dropdown-content button:hover {
+    background-color: #f1f1f1;
+  }  
