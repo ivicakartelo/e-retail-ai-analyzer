@@ -1,4 +1,3 @@
-import { Outlet } from 'react-router-dom';
 import './App.css';
 import AIPromptSearch from './features/aiprompt/AIPromptSearch';
 
