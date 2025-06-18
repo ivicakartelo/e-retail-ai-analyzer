@@ -3,49 +3,25 @@ const express = require('express');
 const session = require('express-session');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const mysql = require('mysql2');
 const path = require('path');
 
-const { generateSQLFromVertex } = require('./vertex'); // adjust path as needed
+const db = require('./db');  // <-- import db connection
+const { generateSQLFromVertex } = require('./vertex');
+
+const ExcelJS = require('exceljs');
 
 const app = express();
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
-app.use(express.json()); // Middleware to parse JSON request bodies
-
-// Setup session middleware
-app.use(session({
-    secret: 'your-secret-key', // Change this to a secure secret key
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-      secure: false, // Set this to true if using https
-      httpOnly: true, // Prevents JavaScript access to the cookie
-      maxAge: 24 * 60 * 60 * 1000, // 1 day expiration
-    }
-  }));
-
-
-// MySQL connection
-const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '', // Use your actual password
-  database: 'e_retail'
-});
+app.use(express.json());
 
 app.listen(5000, () => {
   console.log('Server is running on http://localhost:5000');
 });
 
-db.connect(err => {
-    if (err) {
-        console.error('error connecting: ' + err.stack);
-        return;
-    }
-    console.log('connected as id ' + db.threadId);
-});
+// No more db.connect() here — connection is established in db.js
 
 app.post('/articles/ai', async (req, res) => {
   const { userPrompt } = req.body;
@@ -59,8 +35,6 @@ app.post('/articles/ai', async (req, res) => {
     res.status(500).json({ error: 'Failed to generate or execute SQL' });
   }
 });
-
-const ExcelJS = require('exceljs');
 
 app.post('/ai-excel', async (req, res) => {
   const { userPrompt } = req.body;
