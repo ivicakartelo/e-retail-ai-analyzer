@@ -1,27 +1,19 @@
 require('dotenv').config();
 const express = require('express');
-const session = require('express-session');
 const cors = require('cors');
-const bodyParser = require('body-parser');
 const path = require('path');
-
 const db = require('./db');  // <-- import db connection
 const { generateSQLFromVertex } = require('./vertex');
-
 const ExcelJS = require('exceljs');
-
 const app = express();
 
 app.use(cors());
-app.use(bodyParser.json());
 app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
 app.use(express.json());
 
 app.listen(5000, () => {
   console.log('Server is running on http://localhost:5000');
 });
-
-// No more db.connect() here — connection is established in db.js
 
 app.post('/articles/ai', async (req, res) => {
   const { userPrompt } = req.body;
