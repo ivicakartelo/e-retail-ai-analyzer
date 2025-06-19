@@ -67,6 +67,9 @@ const AIPromptSearch = () => {
 
       setSQL(response.data.sql);
 
+      console.log(response.data.results)
+      console.log(response.data.sql)
+
       const results = response.data.results.map(item => {
         if ('quarter' in item && (
           'total_sales' in item || 'total_amount' in item || 'sum' in item
