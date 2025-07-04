@@ -30,13 +30,15 @@ async function generateSQLFromVertex(userPrompt) {
   const schema = await getDatabaseSchema();
 
   const prompt = `
-${schema}
+    ${schema}
 
-Instruction: Convert the following user request into a valid SQL query.
-Only return the SQL query — no explanation, no markdown formatting.
+    Instruction: Convert the following user request into a valid SQL query.
+  - The SQL dialect is MySQL.
+  - Use MySQL functions only (e.g., DATE_FORMAT instead of strftime).
+  - Only return the SQL query — no explanation, no markdown formatting.
 
-Request: "${userPrompt}"
-`;
+    Request: "${userPrompt}"
+  `;
 
   try {
     const result = await model.generateContent(prompt);
