@@ -7,6 +7,9 @@ const { generateSQLFromVertex } = require('./vertex');
 const { generateEmbedding } = require('./features/embedding/generateEmbedding');
 const ExcelJS = require('exceljs');
 const app = express();
+const { generateAllEmbeddings, searchSimilarPrompts } = require('./embeddingSearch');
+
+generateAllEmbeddings(); // initialize sample data
 
 app.use(cors());
 app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
@@ -76,5 +79,17 @@ app.post('/articles/embedding', async (req, res) => {
   } catch (err) {
     console.error('Embedding error:', err.message);
     res.status(500).json({ error: 'Failed to generate embedding' });
+  }
+});
+
+app.post('/embedding/search', async (req, res) => {
+  const { query } = req.body;
+
+  try {
+    const results = await searchSimilarPrompts(query);
+    res.status(200).json(results);
+  } catch (err) {
+    console.error('Embedding search error:', err);
+    res.status(500).json({ error: 'Failed to search embeddings' });
   }
 });

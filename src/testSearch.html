@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Embedding Search Test</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    #output { white-space: pre-wrap; background: #f0f0f0; padding: 10px; border-radius: 4px; margin-top: 15px; }
+    button { padding: 8px 16px; font-size: 16px; }
+  </style>
+</head>
+<body>
+  <h1>Embedding Search Test</h1>
+  
+  <input type="text" id="queryInput" placeholder="Type your search query" size="40" value="Tips for growing vegetables" />
+  <button id="searchBtn">Search</button>
+
+  <pre id="output"></pre>
+
+  <script>
+    document.getElementById('searchBtn').addEventListener('click', async () => {
+      const query = document.getElementById('queryInput').value.trim();
+      if (!query) {
+        alert('Please enter a search query');
+        return;
+      }
+
+      try {
+        const response = await fetch('http://localhost:5000/embedding/search', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ query })
+        });
+
+        if (!response.ok) {
+          throw new Error('Server error: ' + response.status);
+        }
+
+        const results = await response.json();
+        document.getElementById('output').textContent = JSON.stringify(results, null, 2);
+        console.log(results);
+      } catch (err) {
+        document.getElementById('output').textContent = 'Error: ' + err.message;
+        console.error(err);
+      }
+    });
+  </script>
+</body>
+</html>
