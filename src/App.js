@@ -1,5 +1,6 @@
 import './App.css';
 import AIPromptSearch from './features/aiprompt/AIPromptSearch';
+import EmbeddingSearch from './features/aiprompt/EmbeddingSearch';
 
 
 const App = () => {
@@ -7,6 +8,7 @@ const App = () => {
     <div className="content-wrapper">
         <main className="content full-width">
           <AIPromptSearch />
+          <EmbeddingSearch />
         </main>
     </div>
   );

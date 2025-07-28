@@ -4,6 +4,7 @@ const cors = require('cors');
 const path = require('path');
 const db = require('./db');  // <-- import db connection
 const { generateSQLFromVertex } = require('./vertex');
+const { generateEmbedding } = require('./openaiEmbedding');
 const ExcelJS = require('exceljs');
 const app = express();
 
@@ -59,5 +60,21 @@ app.post('/ai-excel', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to generate Excel file' });
+  }
+});
+
+app.post('/articles/embedding', async (req, res) => {
+  const { userPrompt } = req.body;
+
+  try {
+    const embedding = await generateEmbedding(userPrompt);
+    res.status(200).json({
+      message: 'Embedding generated successfully',
+      vectorLength: embedding.length,
+      previewVector: embedding.slice(0, 5),
+    });
+  } catch (err) {
+    console.error('Embedding error:', err.message);
+    res.status(500).json({ error: 'Failed to generate embedding' });
   }
 });
