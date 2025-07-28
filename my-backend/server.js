@@ -4,7 +4,7 @@ const cors = require('cors');
 const path = require('path');
 const db = require('./db');  // <-- import db connection
 const { generateSQLFromVertex } = require('./vertex');
-const { generateEmbedding } = require('./openaiEmbedding');
+const { generateEmbedding } = require('./features/embedding/generateEmbedding');
 const ExcelJS = require('exceljs');
 const app = express();
 
