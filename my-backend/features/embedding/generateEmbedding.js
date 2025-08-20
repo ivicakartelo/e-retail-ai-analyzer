@@ -12,10 +12,10 @@ async function generateEmbedding(text) {
       input: text,
     });
     return response.data[0].embedding;
-  } catch (error) {
+    } catch (error) {
     console.error("OpenAI Embedding Error:", error.message);
     throw new Error("Failed to generate embedding");
   }
 }
 
-module.exports = { generateEmbedding };
+module.exports = { generateEmbedding, openai };

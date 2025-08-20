@@ -48,7 +48,7 @@ async function searchSimilarPrompts(query) {
       score: cosineSimilarity(queryEmbedding, item.embedding),
     }))
     .sort((a, b) => b.score - a.score)
-    .slice(0, 3);
+    .slice(0, 4);
 
   return results;
 }
