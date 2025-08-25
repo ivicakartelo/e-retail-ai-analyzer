@@ -2,6 +2,7 @@ import './App.css';
 import AIPromptSearch from './features/aiprompt/AIPromptSearch';
 import EmbeddingSearch from './features/aiprompt/EmbeddingSearch';
 import SemanticSearch from './features/aiprompt/SemanticSearch';
+import SemanticSearchWithLLM from './features/aiprompt/SemanticSearchWithLLM';
 
 const App = () => {
   return (
@@ -10,6 +11,7 @@ const App = () => {
         <AIPromptSearch />
         <EmbeddingSearch />
         <SemanticSearch />
+        <SemanticSearchWithLLM />
       </main>
     </div>
   );

@@ -103,19 +103,38 @@ app.post('/embedding/search', async (req, res) => {
   }
 });
 
-// Full semantic search: embeddings + LLM
-app.post('/embedding/semantic-search', async (req, res) => {
+// ✅ PURE SEMANTIC SEARCH
+app.post('/semantic-search', async (req, res) => {
   const { query } = req.body;
 
   try {
-    // 1. Reuse embedding search
     const results = await searchSimilarPrompts(query);
-    console.log(results)
-    
-    // 2. Build context
+
+    res.status(200).json({
+      query,
+      contextUsed: results,   // closest chunks only
+      message: "Semantic search completed successfully"
+    });
+
+  } catch (err) {
+    console.error('Semantic search error:', err);
+    res.status(500).json({ error: 'Failed to run semantic search' });
+  }
+});
+
+
+// ✅ SEMANTIC SEARCH + LLM (RAG)
+app.post('/semantic-search-with-llm', async (req, res) => {
+  const { query } = req.body;
+
+  try {
+    // 1. Run semantic search
+    const results = await searchSimilarPrompts(query);
+
+    // 2. Prepare context
     const context = results.map(r => r.text).join('\n');
-    console.log(context)
-    // 3. Send to LLM
+
+    // 3. Pass into LLM
     const llmPrompt = `
       You are a helpful assistant.
       The user asked: "${query}"
@@ -138,7 +157,7 @@ app.post('/embedding/semantic-search', async (req, res) => {
     });
 
   } catch (err) {
-    console.error('Semantic search error:', err);
-    res.status(500).json({ error: 'Failed to run semantic search' });
+    console.error('Semantic search with LLM error:', err);
+    res.status(500).json({ error: 'Failed to run semantic search with LLM' });
   }
 });
